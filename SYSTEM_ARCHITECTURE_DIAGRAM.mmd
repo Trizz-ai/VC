@@ -1,0 +1,256 @@
+%% Verified Compliance - Complete System Architecture Diagram
+%% Version: 1.0.0
+%% Last Updated: November 2, 2025
+
+graph TB
+    %% ========================================
+    %% CLIENT LAYER
+    %% ========================================
+    subgraph CLIENT["🖥️ CLIENT LAYER"]
+        direction LR
+        MA["📱 Mobile App<br/><b>Flutter 3.16+</b><br/>iOS/Android<br/>Offline-First Design"]
+        WB["🌐 Web Browser<br/><b>Public Share</b><br/>Session Verification<br/>No Authentication"]
+    end
+    
+    %% ========================================
+    %% CDN & EDGE LAYER
+    %% ========================================
+    subgraph EDGE["🌍 CDN & EDGE LAYER"]
+        direction TB
+        CF["☁️ CloudFlare CDN<br/><b>Global Edge Network</b><br/>DDoS Protection<br/>WAF Security<br/>SSL/TLS Termination<br/>Cache Hit Rate: 93%"]
+    end
+    
+    %% ========================================
+    %% API GATEWAY LAYER
+    %% ========================================
+    subgraph GATEWAY["🚪 API GATEWAY LAYER"]
+        direction TB
+        NGINX["⚡ Nginx Reverse Proxy<br/><b>Version 1.25+</b><br/>SSL Termination<br/>Load Balancing<br/>Rate Limiting<br/>Security Headers"]
+        LB["⚖️ Load Balancer<br/><b>Round Robin</b><br/>Health Checks<br/>Auto-failover<br/>Session Affinity"]
+    end
+    
+    %% ========================================
+    %% APPLICATION LAYER
+    %% ========================================
+    subgraph APP["🚀 APPLICATION LAYER - Auto-Scaling"]
+        direction LR
+        API1["🐍 FastAPI Instance 1<br/><b>Python 3.11</b><br/>Uvicorn ASGI<br/>CPU: 45%<br/>Memory: 512MB<br/>Requests: 2.5K/min"]
+        API2["🐍 FastAPI Instance 2<br/><b>Python 3.11</b><br/>Uvicorn ASGI<br/>CPU: 52%<br/>Memory: 498MB<br/>Requests: 2.8K/min"]
+        API3["🐍 FastAPI Instance N<br/><b>Auto-Scale</b><br/>Scales at CPU>70%<br/>Min: 2, Max: 10<br/>Current: 3 instances"]
+    end
+    
+    %% ========================================
+    %% SERVICE LAYER
+    %% ========================================
+    subgraph SERVICES["⚙️ CORE SERVICE LAYER"]
+        direction TB
+        
+        subgraph CORE_SERVICES["Core Business Services"]
+            LS["📍 Location Service<br/><b>GPS Verification</b><br/>PostGIS Queries<br/>Distance Calc<br/>200m Threshold"]
+            SS["📅 Session Service<br/><b>Attendance Tracking</b><br/>Lifecycle Mgmt<br/>Event Recording<br/>Duration Calc"]
+            MS["🏢 Meeting Service<br/><b>Event Management</b><br/>Spatial Search<br/>Category Filtering<br/>Active Status"]
+            CS["👥 Contact Service<br/><b>User Management</b><br/>Profile Updates<br/>Consent Tracking<br/>Data Privacy"]
+        end
+        
+        subgraph INTEGRATION_SERVICES["Integration Services"]
+            OS["📱 Offline Service<br/><b>Queue Management</b><br/>Action Queueing<br/>Batch Sync<br/>Conflict Resolution"]
+            GS["🔗 GHL Service<br/><b>CRM Integration</b><br/>Contact Upsert<br/>Custom Fields<br/>Webhook Delivery"]
+            ES["📧 Email Service<br/><b>SendGrid</b><br/>Transactional<br/>Templates<br/>Delivery Tracking"]
+            NS["🔔 Notification Service<br/><b>FCM Push</b><br/>Session Reminders<br/>Check-in Alerts<br/>Completion Notice"]
+        end
+        
+        subgraph INFRASTRUCTURE_SERVICES["Infrastructure Services"]
+            PS["⚡ Performance Service<br/><b>Optimization</b><br/>Query Tuning<br/>Index Management<br/>Cache Strategy"]
+            MO["📊 Monitoring Service<br/><b>Health Checks</b><br/>Metrics Collection<br/>Alert Management<br/>Uptime Tracking"]
+        end
+    end
+    
+    %% ========================================
+    %% DATA LAYER
+    %% ========================================
+    subgraph DATA["💾 DATA PERSISTENCE LAYER"]
+        direction TB
+        
+        subgraph PRIMARY_DB["Primary Database Cluster"]
+            PG["🐘 PostgreSQL 15 Master<br/><b>Primary Database</b><br/>+ PostGIS 3.0<br/>ACID Compliance<br/>Spatial Indexes<br/>Size: 45GB<br/>Connections: 60/100<br/>Write Operations"]
+            PG_R1["🐘 PostgreSQL Replica 1<br/><b>Read Replica</b><br/>Async Replication<br/>Read Operations<br/>Query Offloading"]
+            PG_R2["🐘 PostgreSQL Replica 2<br/><b>Read Replica</b><br/>Async Replication<br/>Geographic Distribution<br/>Disaster Recovery"]
+        end
+        
+        subgraph CACHE_LAYER["Cache & Queue Cluster"]
+            RD["🔴 Redis 7 Master<br/><b>Application Cache</b><br/>Session Storage<br/>API Cache<br/>TTL: 5-60 min<br/>Memory: 2GB/8GB<br/>Hit Rate: 93%<br/>Task Queue"]
+            RD_R1["🔴 Redis Replica 1<br/><b>Cache Replica</b><br/>Read Operations<br/>Failover Ready"]
+            RD_R2["🔴 Redis Replica 2<br/><b>Cache Replica</b><br/>Geographic Distribution"]
+        end
+        
+        subgraph STORAGE["Object Storage"]
+            S3["☁️ AWS S3<br/><b>File Storage</b><br/>QR Code Images<br/>PDF Exports<br/>Static Maps<br/>Size: 50GB<br/>Cross-Region Replication"]
+        end
+    end
+    
+    %% ========================================
+    %% EXTERNAL SERVICES LAYER
+    %% ========================================
+    subgraph EXTERNAL["🌐 EXTERNAL SERVICES INTEGRATION"]
+        direction TB
+        
+        subgraph CRM["CRM Platform"]
+            GHL["🎯 GoHighLevel<br/><b>CRM Integration</b><br/>Contact Management<br/>Custom Fields<br/>Automation Tags<br/>Webhooks<br/>Opportunity Tracking"]
+        end
+        
+        subgraph MAPS["Geospatial Services"]
+            GM["🗺️ Google Maps<br/><b>Location Services</b><br/>Geocoding API<br/>Static Maps API<br/>Distance Matrix<br/>Places API<br/>Directions"]
+        end
+        
+        subgraph COMMS["Communication Services"]
+            SG["📨 SendGrid<br/><b>Email Service</b><br/>Transactional Email<br/>HTML Templates<br/>Delivery Analytics<br/>Webhook Events"]
+            FCM["🔔 Firebase<br/><b>Push Notifications</b><br/>Cloud Messaging<br/>Topic Subscriptions<br/>Device Tokens<br/>Analytics"]
+        end
+    end
+    
+    %% ========================================
+    %% MONITORING LAYER
+    %% ========================================
+    subgraph MONITORING["📈 MONITORING & OBSERVABILITY"]
+        direction LR
+        
+        subgraph METRICS["Metrics & Visualization"]
+            PM["📊 Prometheus<br/><b>Metrics Collection</b><br/>Time-Series DB<br/>Scrape Interval: 15s<br/>Retention: 30 days<br/>Alerting Rules"]
+            GR["📉 Grafana<br/><b>Dashboards</b><br/>Real-time Metrics<br/>Custom Dashboards<br/>Alert Visualization<br/>SLO/SLI Tracking"]
+        end
+        
+        subgraph LOGGING["Logging & Error Tracking"]
+            SN["🐛 Sentry<br/><b>Error Tracking</b><br/>Exception Monitoring<br/>Performance Tracing<br/>Release Tracking<br/>Error Rate: 0.05%"]
+            LT["📝 Logtail<br/><b>Log Aggregation</b><br/>Structured Logging<br/>Search & Filter<br/>Retention: 90 days<br/>Audit Trail"]
+        end
+        
+        subgraph ALERTING["Alerting & Incident"]
+            UR["⏰ UptimeRobot<br/><b>Uptime Monitoring</b><br/>Endpoint Checks<br/>5-min Intervals<br/>Status Page<br/>Uptime: 99.95%"]
+            PD["🚨 PagerDuty<br/><b>Incident Management</b><br/>On-call Rotation<br/>Escalation Policy<br/>Alert Routing"]
+        end
+    end
+    
+    %% ========================================
+    %% CONNECTIONS - Client to Edge
+    %% ========================================
+    MA -->|"HTTPS/TLS 1.3<br/>Mobile API Requests"| CF
+    WB -->|"HTTPS/TLS 1.3<br/>Public Share Views"| CF
+    
+    %% ========================================
+    %% CONNECTIONS - Edge to Gateway
+    %% ========================================
+    CF -->|"DDoS Filtered<br/>WAF Protected<br/>Cached Static"| NGINX
+    NGINX -->|"SSL Terminated<br/>Rate Limited<br/>Security Headers"| LB
+    
+    %% ========================================
+    %% CONNECTIONS - Gateway to Application
+    %% ========================================
+    LB -->|"HTTP/2<br/>Health: ✓<br/>2.5K req/min"| API1
+    LB -->|"HTTP/2<br/>Health: ✓<br/>2.8K req/min"| API2
+    LB -->|"HTTP/2<br/>Health: ✓<br/>Auto-scaled"| API3
+    
+    %% ========================================
+    %% CONNECTIONS - Application to Services
+    %% ========================================
+    API1 --> LS
+    API1 --> SS
+    API1 --> MS
+    API1 --> CS
+    
+    API2 --> OS
+    API2 --> GS
+    API2 --> ES
+    API2 --> NS
+    
+    API3 --> PS
+    API3 --> MO
+    
+    %% Service Dependencies
+    SS --> LS
+    SS --> GS
+    SS --> ES
+    SS --> NS
+    MS --> LS
+    
+    %% ========================================
+    %% CONNECTIONS - Services to Database
+    %% ========================================
+    LS -->|"Write Ops<br/>Spatial Queries"| PG
+    SS -->|"Write Ops<br/>Session CRUD"| PG
+    MS -->|"Spatial Search<br/>PostGIS"| PG
+    CS -->|"Write Ops<br/>Contact CRUD"| PG
+    OS -->|"Queue Persist"| PG
+    
+    LS -->|"Read Ops<br/>Load Balanced"| PG_R1
+    MS -->|"Read Ops<br/>Complex Queries"| PG_R2
+    CS -->|"Read Ops<br/>Profile Data"| PG_R1
+    
+    %% Database Replication
+    PG -.->|"Async Replication<br/>WAL Streaming"| PG_R1
+    PG -.->|"Async Replication<br/>WAL Streaming"| PG_R2
+    
+    %% ========================================
+    %% CONNECTIONS - Services to Cache
+    %% ========================================
+    LS -->|"Cache Location<br/>TTL: 10 min"| RD
+    SS -->|"Cache Session<br/>TTL: 15 min"| RD
+    MS -->|"Cache Meetings<br/>TTL: 60 min"| RD
+    CS -->|"Cache Contact<br/>TTL: 30 min"| RD
+    OS -->|"Queue Management<br/>Task Queue"| RD
+    
+    %% Cache Replication
+    RD -.->|"Async Replication<br/>AOF + RDB"| RD_R1
+    RD -.->|"Async Replication<br/>AOF + RDB"| RD_R2
+    
+    %% ========================================
+    %% CONNECTIONS - Services to Storage
+    %% ========================================
+    SS -->|"Store QR Codes<br/>Store Exports"| S3
+    MS -->|"Store Meeting Images"| S3
+    ES -->|"Store PDF Reports"| S3
+    
+    %% ========================================
+    %% CONNECTIONS - Services to External
+    %% ========================================
+    GS -->|"REST API<br/>Contact Upsert<br/>Custom Fields<br/>Webhooks"| GHL
+    LS -->|"Geocoding API<br/>Static Maps<br/>Distance Matrix"| GM
+    ES -->|"Email API v3<br/>Templates<br/>Webhooks"| SG
+    NS -->|"FCM API<br/>Topic Subscribe<br/>Device Tokens"| FCM
+    
+    %% ========================================
+    %% CONNECTIONS - Application to Monitoring
+    %% ========================================
+    API1 -->|"Expose /metrics<br/>Scrape: 15s"| PM
+    API2 -->|"Expose /metrics<br/>Scrape: 15s"| PM
+    API3 -->|"Expose /metrics<br/>Scrape: 15s"| PM
+    
+    PM -->|"Query & Visualize<br/>Alert Rules"| GR
+    
+    API1 -->|"Exception Tracking<br/>Performance"| SN
+    API2 -->|"Structured Logs<br/>JSON Format"| LT
+    API3 -->|"Health Checks<br/>Status: 200"| UR
+    
+    UR -->|"Alert on Down<br/>Escalate"| PD
+    GR -->|"Threshold Alerts<br/>Escalate"| PD
+    
+    %% ========================================
+    %% STYLING
+    %% ========================================
+    classDef clientStyle fill:#e1f5ff,stroke:#01579b,stroke-width:3px,color:#000
+    classDef edgeStyle fill:#f3e5f5,stroke:#4a148c,stroke-width:3px,color:#000
+    classDef gatewayStyle fill:#e8f5e9,stroke:#1b5e20,stroke-width:3px,color:#000
+    classDef appStyle fill:#fff3e0,stroke:#e65100,stroke-width:3px,color:#000
+    classDef serviceStyle fill:#fce4ec,stroke:#880e4f,stroke-width:3px,color:#000
+    classDef dataStyle fill:#e0f2f1,stroke:#004d40,stroke-width:3px,color:#000
+    classDef externalStyle fill:#fff9c4,stroke:#f57f17,stroke-width:3px,color:#000
+    classDef monitorStyle fill:#f1f8e9,stroke:#33691e,stroke-width:3px,color:#000
+    
+    class MA,WB clientStyle
+    class CF edgeStyle
+    class NGINX,LB gatewayStyle
+    class API1,API2,API3 appStyle
+    class LS,SS,MS,CS,OS,GS,ES,NS,PS,MO serviceStyle
+    class PG,PG_R1,PG_R2,RD,RD_R1,RD_R2,S3 dataStyle
+    class GHL,GM,SG,FCM externalStyle
+    class PM,GR,SN,LT,UR,PD monitorStyle
+
